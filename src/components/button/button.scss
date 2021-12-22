@@ -1,9 +1,10 @@
 @import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
 
 .button {
   cursor: pointer;
-  background: $color-3;
-  color: $color-1;
+  background: var(--color-3);
+  color: var(--color-1);
   padding: .75rem 3.5rem;
   font-weight: $font-weight-bold;
   font-family: $font-1;
@@ -18,10 +19,6 @@
   white-space: nowrap;
   box-sizing: border-box;
 
-  i {
-    font-size: 1.5rem;
-  }
-
   &:disabled {
     cursor: not-allowed;
   }
@@ -32,11 +29,7 @@
 
   &:active {
     transition: all .1s ease;
-    box-shadow: inset 0 0 1rem $color-3;
-  }
-
-  &__sup {
-    @include sup
+    box-shadow: inset 0 0 1rem var(--color-3);
   }
 
   &--action {
@@ -47,23 +40,14 @@
     font-weight: $font-weight-default;
   }
 
-  &--invert-sup &__sup {
-    order: 1;
-    margin-left: 0;
-  }
-
-  &--invert-sup &__main {
-    order: 2;
-    margin-left: .5rem;
-  }
-
   &--outlined {
     background: transparent;
-    border: 1px solid $color-1;
+    border: 1px solid var(--color-3);
+    color: var(--color-3);
   }
 
   &--outlined:hover {
-    background: rgba($color-1, 0.1);
+    background: rgba(var(--color-3), 0.1);
   }
 
   &--outlined:active {
@@ -72,34 +56,10 @@
 
   &--link {
     background: transparent;
-    color: $color-3;
+    color: var(--color-3);
     text-decoration: underline;
     padding-left: 0;
     padding-right: 0;
-  }
-
-  &--icon {
-    background: transparent;
-    text-decoration: underline;
-    padding: .5rem 1rem;
-  }
-
-  &--icon:hover,
-  &--icon:focus,
-  &--link:focus,
-  &--link:hover {
-    transition: all .1s ease;
-    box-shadow: none;
-    background: transparent;
-  }
-
-  &--link:hover {
-    color: $color-2;
-  }
-
-  &__suffix svg {
-    margin-left: 1rem;
-    width: 1.25rem;
   }
 }
 
@@ -114,6 +74,16 @@
 
   &--dense > .button:not(:last-child) {
     margin-right: initial;
+  }
+
+  &--collapsed > .button:not(:last-child) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  &--collapsed > .button:not(:first-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
   }
 
   &--expandedButtons > .button {

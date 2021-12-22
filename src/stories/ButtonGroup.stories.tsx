@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from 'react'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { Button, Group } from '../components/button/button'
 
@@ -8,16 +8,21 @@ export default {
   argTypes: {}
 } as ComponentMeta<typeof Group>
 
-const Template: ComponentStory<typeof Group> = (args) => <Group {...args} />
+const Template: ComponentStory<typeof Group> = (args) => (
+  <>
+    <Group {...args}>
+      <Button>Button 1</Button>
+      <Button>Button 2</Button>
+    </Group>
+    <Group {...args}>
+      <Button>Save</Button>
+      <Button variant='link'>Cancel</Button>
+    </Group>
+  </>
+)
 
 export const Example1 = Template.bind({})
 Example1.args = {
-  dense: 'false',
   size: 'md',
-  children: (
-    <Fragment>
-      <Button>Button 1</Button>
-      <Button>Button 2</Button>
-    </Fragment>
-  )
+  spacingBelow: 1
 }

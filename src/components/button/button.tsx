@@ -2,7 +2,6 @@ import React from 'react'
 import './button.css'
 import classNames from 'classnames'
 
-/** @inheritdoc */
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
@@ -18,7 +17,7 @@ export interface ButtonProps
 }
 
 /**
- * General component description.
+ * A button is a simple ui element a user can interact with.
  */
 export const Button = (props: ButtonProps) => {
   const { variant, size, type, component, children, disabled, ...otherProps } =
@@ -32,7 +31,7 @@ export const Button = (props: ButtonProps) => {
       className={classNames('button', props.className, {
         ['button--' + size]: Boolean(size),
         ['button--' + variant]: Boolean(variant),
-        'button--disabled': disabled,
+        'button--disabled': disabled
       })}
     >
       <div className='button__main'>{children}</div>
@@ -47,14 +46,29 @@ Button.defaultProps = {
 }
 
 interface GroupProps extends React.ButtonHTMLAttributes<HTMLElement> {
+  /**
+   * All buttons will respect the size defined by the group.
+   */
   size?: 'xs' | 'sm' | 'md' | 'lg'
+  /**
+   * If true then the spacing between the buttons will be removed.
+   */
+  dense?: boolean
+  /**
+   * If true then the border radius of inner buttons will be removed.
+   */
+  collapsed?: boolean
+  /**
+   * If true the buttons will expand equally to fill up the available space.
+   */
+  expandedButtons?: boolean
   spacingTop?: 1 | 2
   spacingBelow?: 1 | 2
-  className?: string
-  dense?: boolean
-  expandedButtons?: boolean
 }
 
+/**
+ * A button group can be used to combine multiple buttons under a single container.
+ */
 export const Group = (props: GroupProps) => {
   const {
     children,
@@ -63,12 +77,14 @@ export const Group = (props: GroupProps) => {
     spacingTop,
     spacingBelow,
     dense,
+    collapsed,
     expandedButtons
   } = props
   return (
     <div
       className={classNames('button-group', className, {
         'button-group--dense': dense,
+        'button-group--collapsed': collapsed,
         'button-group--expandedButtons': expandedButtons,
         ['button-group--' + size]: Boolean(size),
         ['button-group--spacing-top-' + spacingTop]: Boolean(spacingTop),
