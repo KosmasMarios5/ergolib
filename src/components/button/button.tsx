@@ -2,15 +2,17 @@ import React from 'react'
 import './button.css'
 import classNames from 'classnames'
 
+/** @inheritdoc */
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  component?: keyof JSX.IntrinsicElements
-  noAction?: boolean
-  outlined?: boolean
   /**
-   * Is this the principal call to action on the page?
+   * Wrapper instead of the default html element
    */
-  variant?: 'action' | 'link' | 'default'
+  component?: keyof JSX.IntrinsicElements
+  /**
+   * Default styling of the button
+   */
+  variant?: 'action' | 'link' | 'default' | 'outlined'
   size?: 'xs' | 'sm' | 'md' | 'lg'
   disabled?: boolean
 }
@@ -18,18 +20,9 @@ export interface ButtonProps
 /**
  * General component description.
  */
-const Button: React.FC<ButtonProps> = (props) => {
-  const {
-    noAction,
-    outlined,
-    variant,
-    size,
-    type,
-    component,
-    children,
-    disabled,
-    ...otherProps
-  } = props
+export const Button = (props: ButtonProps) => {
+  const { variant, size, type, component, children, disabled, ...otherProps } =
+    props
   const Component = component as 'button'
   return (
     <Component
@@ -40,8 +33,6 @@ const Button: React.FC<ButtonProps> = (props) => {
         ['button--' + size]: Boolean(size),
         ['button--' + variant]: Boolean(variant),
         'button--disabled': disabled,
-        'button--no-action': noAction,
-        'button--outlined': outlined
       })}
     >
       <div className='button__main'>{children}</div>
@@ -55,41 +46,40 @@ Button.defaultProps = {
   size: 'md'
 }
 
-// type GroupProps = {
-//   children?: React.Node,
-//   size?: 'xs' | 'sm' | 'md' | 'lg',
-//   spacingTop?: 1 | 2,
-//   spacingBelow?: 1 | 2,
-//   className?: string,
-//   dense?: boolean,
-//   expandedButtons?: boolean
-// }
-//
-// const Group = (props: GroupProps) => {
-//   const {
-//     children,
-//     size,
-//     className,
-//     spacingTop,
-//     spacingBelow,
-//     dense,
-//     expandedButtons
-//   } = props
-//   return (
-//     <div
-//       className={classNames('button-group', className, {
-//         'button-group--dense': dense,
-//         'button-group--expandedButtons': expandedButtons,
-//         ['button-group--' + size]: Boolean(size),
-//         ['button-group--spacing-top-' + spacingTop]: Boolean(spacingTop),
-//         ['button-group--spacing-below-' + spacingBelow]: Boolean(spacingBelow)
-//       })}
-//     >
-//       {children}
-//     </div>
-//   )
-// }
-//
-// Button.Group = Group
+interface GroupProps extends React.ButtonHTMLAttributes<HTMLElement> {
+  size?: 'xs' | 'sm' | 'md' | 'lg'
+  spacingTop?: 1 | 2
+  spacingBelow?: 1 | 2
+  className?: string
+  dense?: boolean
+  expandedButtons?: boolean
+}
+
+export const Group = (props: GroupProps) => {
+  const {
+    children,
+    size,
+    className,
+    spacingTop,
+    spacingBelow,
+    dense,
+    expandedButtons
+  } = props
+  return (
+    <div
+      className={classNames('button-group', className, {
+        'button-group--dense': dense,
+        'button-group--expandedButtons': expandedButtons,
+        ['button-group--' + size]: Boolean(size),
+        ['button-group--spacing-top-' + spacingTop]: Boolean(spacingTop),
+        ['button-group--spacing-below-' + spacingBelow]: Boolean(spacingBelow)
+      })}
+    >
+      {children}
+    </div>
+  )
+}
+
+Button.Group = Group
 
 export default Button

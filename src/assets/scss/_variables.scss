@@ -1,0 +1,34 @@
+$color-1: #FFFFFF !default;
+$color-2: #FF9F00 !default;
+$color-3: #0C1217 !default;
+$color-4: #633025 !default;
+$color-5: #414141 !default;
+$color-6: #858585 !default;
+$color-7: #BBBDBD !default;
+$color-8: #F5F5F5 !default;
+$color-background: #F5F5F5 !default;
+$color-success: #26BC7D !default;
+$color-warning: #FED33C !default;
+$color-error: #FF0000 !default;
+
+$base-unit: 10px !default;
+
+$bp-xl: 75em !default; // 1200px
+$bp-lg: 68.75em !default; // 1100px
+$bp-md: 56.25em !default; // 900px
+$bp-sm: 37.5em !default; // 600px
+$bp-xs: 31.25em !default; // 500px
+
+$font-1: 'Arial', 'sans-serif' !default;
+$font-2: 'Times New Roman', 'serif' !default;
+$font-3: 'Georgia', 'serif' !default;
+
+$font-weight-default: normal !default;
+$font-weight-bold: bold !default;
+
+$z-index-0: 100 !default;
+$z-index-1: 200 !default;
+$z-index-3: 300 !default;
+$z-index-4: 400 !default;
+$z-index-header: 9999 !default;
+$z-index-modal: 10000 !default;

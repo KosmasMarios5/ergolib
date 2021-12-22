@@ -1,0 +1,60 @@
+@mixin responsive($bp) {
+  @media only screen and (max-width: $bp) {
+    @content;
+  }
+}
+
+@mixin sup() {
+  align-self: baseline;
+  margin-left: .5rem;
+  font-family: $font-2;
+  font-size: .75rem;
+  font-weight: $font-weight-default;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+@mixin spacing() {
+  &--spacing-top-1 {
+    margin-top: 1rem;
+  }
+
+  &--spacing-top-2 {
+    margin-top: 1.5rem;
+  }
+
+  &--spacing-below-1 {
+    margin-bottom: 1rem;
+  }
+
+  &--spacing-below-2 {
+    margin-bottom: 1.5rem;
+  }
+}
+
+@mixin scrollbar($thumb-color, $track-color, $width) {
+  ::-webkit-scrollbar {
+    width: $width;
+    height: $width;
+  }
+  ::-webkit-scrollbar-track {
+    background: $track-color;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: $thumb-color;
+  }
+}
+
+@mixin hover-underline($color) {
+  :hover::after {
+    width: 100%;
+  }
+  ::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: $color;
+    transition: width .3s;
+  }
+}
