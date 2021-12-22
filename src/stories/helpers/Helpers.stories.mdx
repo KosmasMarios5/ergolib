@@ -1,0 +1,119 @@
+import { ArgsTable, Meta,Description } from "@storybook/addon-docs";
+import { RequestCreator } from "./RequestCreator.stories"; import { RouteCreator } from "./RouteCreator.stories"; import {
+  ActionCreator
+} from "./ActionCreator.stories"; import { GetRouteUrl } from "./GetRouteUrl.stories";
+
+<Meta title="Helpers/Main" />
+
+# Helper Functions
+
+These helper functions implement core application functionality. Use them as described below.
+
+## actionCreator
+<Description of={ActionCreator} />
+
+#### examples definition
+```javascript
+//example 1
+export const userLogin = actionCreator(ActionTypes.USER_LOGIN);
+export const userLoginSucceeded = actionCreator(ActionTypes.USER_LOGIN_SUCCEEDED);
+export const userLoginFailed = actionCreator(ActionTypes.USER_LOGIN_FAILED);
+
+//example 2
+export const getOrders = actionCreator(ActionTypes.GET_ORDERS);
+export const getOrdersSucceeded = actionCreator(ActionTypes.GET_ORDERS_SUCCEEDED);
+export const getOrdersFailed = actionCreator(ActionTypes.GET_ORDERS_FAILED);
+```
+#### example usage
+```javascript
+//example 1
+const getOrders = useCallback((pageIndex, pageSize) => {
+  dispatch(actions.getOrders({
+    AddressId: selectedStore.id,
+    requiresCounts: true,
+    skip: pageIndex * pageSize,
+    take: pageSize,
+    isTemplate: 0
+  }))
+}, [dispatch, selectedStore.id])
+
+//example 2
+const userLogin = useCallback((values) => {
+  const bodyFormData = new FormData();
+  bodyFormData.append('username', values.username);
+  bodyFormData.append('password', values.password);
+  dispatch(actions.userLogin(bodyFormData))
+}, [dispatch])
+```
+#### parameters
+<ArgsTable of={ActionCreator} />
+
+## requestCreator
+<Description of={RequestCreator} />
+
+#### examples
+```javascript
+//example 1
+const userLogin = requestCreator({
+    url: '/login',
+    method: 'POST',
+    onSuccess: Actions.userLoginSucceeded,
+    onFailure: Actions.userLoginFailed,
+    headers: {'Content-Type': 'multipart/form-data'}
+})
+//example 2
+const getUserDetails = requestCreator({
+    url: '/b2b/user/data',
+    method: 'GET',
+    onSuccess: Actions.getUserDetailsSucceeded,
+    onFailure: Actions.getUserDetailsFailed,
+})
+//example 3
+const getCustomerTabInfo = requestCreator({
+    url: '/b2b/user/data',
+    method: 'GET',
+    onSuccess: Actions.getCustomerTabInfoSucceeded,
+    onFailure: Actions.getCustomerTabInfoFailed,
+    overrideTask: async () => ({
+        data: require('./mock/customerTab.json')
+    })
+})
+```
+#### parameters
+<ArgsTable of={RequestCreator} />
+
+## routeCreator
+<Description of={RouteCreator} />
+
+#### examples
+```javascript
+//example 1
+export const ROUTE_PAGE_HOME = routeCreator(Home, '/', 'Home', 'page.home', {exact: true})
+//example 2
+export const ROUTE_PAGE_LOGIN = routeCreator(Login, '/login', 'login', 'Login', 'page.login', {exact: true})
+//example 3
+export const ROUTE_PAGE_ANNOUNCEMENT = routeCreator(Announcements, '/announcements/:id', 'Announcements', 'page.announcements')
+//example 4
+export const ROUTE_PAGE_ANNOUNCEMENTS = routeCreator(Announcements, '/announcements', 'Announcements', 'page.announcements.index', {exact: true})
+```
+#### parameters
+<ArgsTable of={RouteCreator} />
+
+## getRouteUrl
+<Description of={GetRouteUrl} />
+
+#### example usage
+```javascript
+//example 1
+<Link
+  to={getRouteUrl(ROUTE_PAGE_ORDER_TEMPLATE, {id: created})}>
+  {t('view')}
+</Link>
+//example 2
+<Link
+  to={getRouteUrl(ROUTE_PAGE_ORDER_EDIT, {id: created})}>
+  {t('view')}
+</Link>
+```
+#### parameters
+<ArgsTable of={GetRouteUrl} />

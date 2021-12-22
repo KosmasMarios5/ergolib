@@ -1,6 +1,3 @@
-/**
- * @see https://reactrouter.com/
- */
 export interface Route {
   component: keyof JSX.IntrinsicElements
   /**
@@ -22,7 +19,7 @@ export interface Route {
 }
 
 /**
- * An action creator defines an internal application route.
+ * A route creator defines an internal application route.
  * @see https://reactrouter.com/
  */
 export const routeCreator = (
