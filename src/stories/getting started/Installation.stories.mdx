@@ -168,11 +168,17 @@ Your application, modules and submodules should follow the folder structure spec
 
 #### Brief folder and file explanation
 
+#### store
+```html
+📂store - Define your store once at the application level, modules do not  need to define it
+┗ 📜store.js
+```
+The store.js file contains important definitions for the application, you only need to define it once.
 #### actions
 ```html
-  📂actions
-  ┣ 📜actions.js  - Contains actions dispatched by components
-  ┗ 📜types.js - Contains type definitions
+📂actions
+┣ 📜actions.js  - Contains actions dispatched by components
+┗ 📜types.js - Contains type definitions
 ```
 An action is an event that will be dispatched at certain point in the application. The **actions** folder
 contains definitions of these events (*actions.js* file) as well as their corresponding types (*types.js* file).
@@ -356,16 +362,14 @@ function getOrdersFailed(state) {
         .setIn(['indexTable', 'loading'], false)
 }
 
-const order = {
+export default {
     initialState: INITIAL_STATE,
     handlers: {
         [ActionTypes.GET_ORDERS]: getOrders,
         [ActionTypes.GET_ORDERS_SUCCEEDED]: getOrdersSucceeded,
         [ActionTypes.GET_ORDERS_FAILED]: getOrdersFailed,
     }
-};
-
-export default order
+}
 ```
 
 #### router
@@ -377,7 +381,6 @@ A router holds routing definitions.
 
 ###### currentUser.js
 ```javascript
-import Home from "../pages/home/home";
 import {routeCreator} from "../helpers/routeCreator";
 import Login from "../pages/login/login";
 import Orders from "../pages/orders/orders";
