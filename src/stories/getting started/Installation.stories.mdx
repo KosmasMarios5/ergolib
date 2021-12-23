@@ -1,0 +1,394 @@
+import { Meta } from '@storybook/addon-docs';
+import { LinkTo, linkTo } from '@storybook/addon-links';
+
+<Meta title="Installation" />
+
+<style>{`
+  .subheading {
+    --mediumdark: '#999999';
+    font-weight: 900;
+    font-size: 13px;
+    color: #999;
+    letter-spacing: 6px;
+    line-height: 24px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    margin-top: 40px;
+  }
+
+  .link-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    row-gap: 10px;
+  }
+
+  @media (min-width: 620px) {
+    .link-list {
+      row-gap: 20px;
+      column-gap: 20px;
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media all and (-ms-high-contrast:none) {
+  .link-list {
+      display: -ms-grid;
+      -ms-grid-columns: 1fr 1fr;
+      -ms-grid-rows: 1fr 1fr;
+    }
+  }
+
+  .link-item {
+    display: block;
+    padding: 20px 30px 20px 15px;
+    border: 1px solid #00000010;
+    border-radius: 5px;
+    transition: background 150ms ease-out, border 150ms ease-out, transform 150ms ease-out;
+    color: #333333;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .link-item:hover {
+    border-color: #1EA7FD50;
+    transform: translate3d(0, -3px, 0);
+    box-shadow: rgba(0, 0, 0, 0.08) 0 3px 10px 0;
+  }
+
+  .link-item:active {
+    border-color: #1EA7FD;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .link-item strong {
+    font-weight: 700;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .link-item img {
+    height: 40px;
+    width: 40px;
+    margin-right: 15px;
+    flex: none;
+  }
+
+  .link-item span {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .tip {
+    display: inline-block;
+    border-radius: 1em;
+    font-size: 11px;
+    line-height: 12px;
+    font-weight: 700;
+    background: #E7FDD8;
+    color: #66BF3C;
+    padding: 4px 12px;
+    margin-right: 10px;
+    vertical-align: top;
+  }
+
+  .tip-wrapper {
+    font-size: 13px;
+    line-height: 20px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+
+  .tip-wrapper code {
+    font-size: 12px;
+    display: inline-block;
+  }
+
+
+`}</style>
+
+# Installation
+
+This page includes basic instructions on how to install the **ergolib** library. The concept behind the
+development of this library, is that each project is divided into modules and submodules. Each module should
+implement some application functionality and be reusable across other applications.
+
+Run the following command using either yarn or npm.
+```
+yarn add ergolib
+npm install ergolib
+```
+
+### General rules
+- Components should **not send http requests**, instead they should dispatch `actions`.
+- Always `normalize` global state inside reducers (**[read more](https://redux.js.org/usage/structuring-reducers/normalizing-state-shape)**).
+### Folder structure
+Your application, modules and submodules should follow the folder structure specified bellow.
+```html
+  PROJECT_NAME / MODULE_NAME
+ ┣ 📂src
+ ┃ ┣ 📂actions
+ ┃ ┃ ┣ 📜actions.js  - Contains actions dispatched by components
+ ┃ ┃ ┗ 📜types.js - Contains type definitions
+ ┃ ┣ 📂api
+ ┃ ┃ ┗ 📜api.js - Contains all api requests definitions
+ ┃ ┣ 📂assets
+ ┃ ┃ ┣ 📂images - Contains images and static assets
+ ┃ ┃ ┃ ┗ 📜index.js
+ ┃ ┣ 📂components
+ ┃ ┃ ┣ 📂footer
+ ┃ ┃ ┃ ┣ 📜footer.css
+ ┃ ┃ ┃ ┣ 📜footer.css.map
+ ┃ ┃ ┃ ┣ 📜footer.js
+ ┃ ┃ ┃ ┗ 📜footer.scss
+ ┃ ┣ 📂helpers
+ ┃ ┃ ┣ 📜constants.js
+ ┃ ┣ 📂hooks
+ ┃ ┣ 📂locales - Contains component translations
+ ┃ ┣ 📂modules - Submodules, if any
+ ┃ ┣ 📂pages
+ ┃ ┃ ┣ 📂home
+ ┃ ┃ ┃ ┣ 📜home.css
+ ┃ ┃ ┃ ┣ 📜home.css.map
+ ┃ ┃ ┃ ┣ 📜home.js
+ ┃ ┃ ┃ ┗ 📜home.scss
+ ┃ ┣ 📂reducer
+ ┃ ┃ ┣ 📂currentUser - A reducer contains application state information
+ ┃ ┃ ┃ ┗ 📜currentUser.js
+ ┃ ┣ 📂router
+ ┃ ┃ ┗ 📜routes.js - Contains routing definitions for the defined pages
+ ┃ ┣ 📂store - Define your store once at the application level, modules do not  need to define it
+ ┃ ┃ ┗ 📜store.js
+ ┃ ┣ 📂types
+ ┃ ┃ ┣ 📜map.js - Mapping functions to pass data to your reducer
+ ┃ ┃ ┣ 📜parse.js - Parse functions to transform Immutable data to plain Javascript objects
+ ┃ ┃ ┗ 📜types.js - Flow type definitions of both mapped and unmapped data.
+ ┃ ┗ 📜index.js
+```
+
+#### Brief folder and file explanation
+
+#### actions
+```html
+  📂actions
+  ┣ 📜actions.js  - Contains actions dispatched by components
+  ┗ 📜types.js - Contains type definitions
+```
+An action is an event that will be dispatched at certain point in the application. The **actions** folder
+contains definitions of these events (*actions.js* file) as well as their corresponding types (*types.js* file).
+
+This example below demonstrates the definition of two actions `userLogin` and `getOrders`.
+Notice that we also define two additional actions, the `Succeeded`
+and `Failed` actions. The purpose of this is that conceptually, one action can have two possible outcomes, either success or failure and
+we want to dispatch these events based in the situation.
+
+When a user tries to log in to the application for instance, the response might be *OK* but could also be something like *Wrong Credentials*.
+Either way, api responses **should not be handled at component level**.
+
+###### actions.js
+```javascript
+//example 1
+export const userLogin = actionCreator(ActionTypes.USER_LOGIN);
+export const userLoginSucceeded = actionCreator(ActionTypes.USER_LOGIN_SUCCEEDED);
+export const userLoginFailed = actionCreator(ActionTypes.USER_LOGIN_FAILED);
+
+//example 2
+export const getOrders = actionCreator(ActionTypes.GET_ORDERS);
+export const getOrdersSucceeded = actionCreator(ActionTypes.GET_ORDERS_SUCCEEDED);
+export const getOrdersFailed = actionCreator(ActionTypes.GET_ORDERS_FAILED);
+```
+###### types.js
+```javascript
+//example 1
+export const USER_LOGIN = 'USER_LOGIN';
+export const USER_LOGIN_SUCCEEDED = 'USER_LOGIN_SUCCEEDED';
+export const USER_LOGIN_FAILED = 'USER_LOGIN_FAILED';
+
+//example 2
+export const GET_ORDERS = 'GET_ORDERS';
+export const GET_ORDERS_SUCCEEDED = 'GET_ORDERS_SUCCEEDED';
+export const GET_ORDERS_FAILED = 'GET_ORDERS_FAILED';
+```
+
+#### api
+```html
+📂api
+  ┗ 📜api.js - Contains all api requests definitions
+```
+This folder contains http request definitions. These api request are triggered everytime certain events are dispatched.
+
+The proposed file structure is documented below. Key things to notice are:
+- **requestHandler**: This object is a lookup Object which maps dispatched event actions to http requests. For instance,
+if the event with *type* `ActionTypes.USER_LOGIN` is dispatched, then an http request at `/login` will be sent.
+- **requestCreator**: Creates http request definitions. ([read more](?path=/story/helper-functions--page))
+
+
+```javascript
+import * as ActionTypes from '../actions/types'
+import * as Actions from '../actions/actions'
+import {requestCreator} from '../helpers/requestCreator'
+
+//example 1
+const userLogin = requestCreator({
+    url: '/login',
+    method: 'POST',
+    onSuccess: Actions.userLoginSucceeded,
+    onFailure: Actions.userLoginFailed,
+    headers: {'Content-Type': 'multipart/form-data'}
+})
+
+//example 2
+const getOrders = requestCreator({
+    url: '/b2b/user/orders',
+    method: 'GET',
+    onSuccess: Actions.getOrdersSucceeded,
+    onFailure: Actions.getOrdersFailed,
+})
+
+const requestHandler = {
+    [ActionTypes.USER_LOGIN]: userLogin,
+    [ActionTypes.GET_ORDERS]: getOrders,
+}
+
+export default requestHandler
+```
+
+#### reducer
+```html
+📂reducer
+┗ 📂currentUser - A reducer contains application state information
+  ┗ 📜currentUser.js
+```
+A reducer holds application/module global state information. You can read more about reducers and redux [here](https://redux.js.org/).
+
+A `reducer` file follows similar file structure as the `api handler` in the section above. At the bottom there is
+*method lookup object* that maps an action to a function which updates the global state. Key things to notice are:
+- **INITIAL_STATE**: This objects holds default state values.
+- **set()**, **getIn()** etc: These are immutableJS methods. The global state must be in an immutable format and not
+as plain javascript object. You can read more about immutableJS by reading the docs [here](https://immutable-js.com/).
+- **mapping functions** in general: You should create these functions to transform your data before using them in your application.
+- It is **important** to define correct data types and to **[normalize global state](https://redux.js.org/usage/structuring-reducers/normalizing-state-shape)**.
+
+###### currentUser.js
+```javascript
+//example 1
+import * as ActionTypes from '../../actions/types'
+
+const INITIAL_STATE = {
+    loading: false,
+    errorLogin: null,
+    token: null,
+    isLoggedIn: false,
+}
+
+function userLogin(state) {
+    return state
+        .set('errorLogin', null)
+        .set('token', null)
+        .set('loading', true)
+        .set('isLoggedIn', false)
+}
+
+function userLoginSucceeded(state, action) {
+    const {access_token} = action.payload
+    return state
+        .set('errorLogin', null)
+        .set('loading', false)
+        .set('token', access_token)
+        .set('isLoggedIn', true)
+}
+
+function userLoginFailed(state, action) {
+    const {message} = action.payload
+    return state
+        .set('errorLogin', message)
+        .set('token', null)
+        .set('loading', false)
+        .set('isLoggedIn', false)
+}
+
+export default {
+    initialState: INITIAL_STATE,
+    handlers: {
+        [ActionTypes.USER_LOGIN]: userLogin,
+        [ActionTypes.USER_LOGIN_SUCCEEDED]: userLoginSucceeded,
+        [ActionTypes.USER_LOGIN_FAILED]: userLoginFailed,
+    }
+}
+```
+###### order.js
+```javascript
+//example 2
+import * as ActionTypes from '../../actions/types'
+import {fromJS} from "immutable";
+import {mapMultiple} from "../../helpers/map";
+import {mapOrder} from "../../types/order/map";
+import _ from "lodash"
+
+const INITIAL_STATE = {
+    loading: false,
+    byId: {},
+    indexTable: {
+        loading: false,
+        items: [],
+        count: 0
+    },
+};
+
+function getOrders(state) {
+    return state
+        .setIn(['indexTable', 'loading'], true)
+}
+
+function getOrdersSucceeded(state, action) {
+    const {payload: {count, result}} = action
+    const mappedData = mapMultiple(result, mapOrder)
+    const sortedKeys = _.orderBy(mappedData, 'date', 'desc').map(i => i.id);
+    return state
+        .set('byId', state.get('byId').merge(fromJS(mappedData)))
+        .setIn(['indexTable', 'count'], parseInt(Number(count)))
+        .setIn(['indexTable', 'items'], fromJS(sortedKeys))
+        .setIn(['indexTable', 'loading'], false)
+}
+
+function getOrdersFailed(state) {
+    return state
+        .setIn(['indexTable', 'loading'], false)
+}
+
+const order = {
+    initialState: INITIAL_STATE,
+    handlers: {
+        [ActionTypes.GET_ORDERS]: getOrders,
+        [ActionTypes.GET_ORDERS_SUCCEEDED]: getOrdersSucceeded,
+        [ActionTypes.GET_ORDERS_FAILED]: getOrdersFailed,
+    }
+};
+
+export default order
+```
+
+#### router
+```html
+📂router
+┗ 📜routes.js - Contains routing definitions for the defined pages
+```
+A router holds routing definitions.
+
+###### currentUser.js
+```javascript
+import Home from "../pages/home/home";
+import {routeCreator} from "../helpers/routeCreator";
+import Login from "../pages/login/login";
+import Orders from "../pages/orders/orders";
+
+export const ROUTE_PAGE_LOGIN = routeCreator(Login, '/login', 'login', 'Login', 'page.login', {exact: true})
+export const ROUTE_PAGE_ORDERS = routeCreator(Orders, '/orders', 'Orders', 'page.orders', {exact: true})
+
+const router = {
+    ROUTE_PAGE_LOGIN,
+    ROUTE_PAGE_ORDERS,
+}
+
+export default router;
+```
