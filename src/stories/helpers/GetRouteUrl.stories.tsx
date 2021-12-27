@@ -6,12 +6,10 @@ import {
   PRIMARY_STORY,
   Title
 } from '@storybook/addon-docs'
-
-// noinspection JSUnusedLocalSymbols
 /**
  * Constructs a url to the supplied route.
  */
-export const GetRouteUrl = (props: RouteUrlInterface) => <div />
+export const GetRouteUrl = (_props: RouteUrlInterface) => <div />
 
 export default {
   title: 'Helpers/GetRouteUrl',

@@ -7,13 +7,12 @@ import {
   Title
 } from '@storybook/addon-docs'
 
-// noinspection JSUnusedLocalSymbols
 /**
  * An action creator defines an event to be used in your application.
  * Returns a function that should be called when an event is dispatched using
  * the `dispatch` redux method, passing payload data and parameters if any.
  */
-export const ActionCreator = (props: ActionCreatorInterface) => <div />
+export const ActionCreator = (_props: ActionCreatorInterface) => <div />
 
 export default {
   title: 'Helpers/ActionCreator',

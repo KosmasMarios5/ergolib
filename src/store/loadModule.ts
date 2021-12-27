@@ -1,5 +1,8 @@
 import { Request as RequestInterface, Route } from '../helpers'
 
+type RootState = {
+  [stateName: string]: any
+}
 /**
  * A reducer holds application/module global state information.
  * You can read more about reducers and redux [here](https://redux.js.org/).
@@ -11,7 +14,7 @@ export interface Reducer {
      */
     initialState: Object
     handlers: {
-      [actionType: string]: (state: Object, action: Object) => typeof state
+      [actionType: string]: (state: RootState, action: Object) => typeof state
     }
   }
 }

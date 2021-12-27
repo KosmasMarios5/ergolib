@@ -29,7 +29,7 @@ export default [
       // NEW
       peerDepsExternal(),
 
-      resolve(),
+      resolve({ preferBuiltins: true, mainFields: ['browser'] }),
       commonjs(),
       typescript({ tsconfig: './tsconfig.json' }),
       postcss(),

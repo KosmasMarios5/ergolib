@@ -8,7 +8,7 @@ export default {
   argTypes: {}
 } as ComponentMeta<typeof Group>
 
-const Template: ComponentStory<typeof Group> = (args) => (
+export const Template: ComponentStory<typeof Group> = (args) => (
   <>
     <Group {...args}>
       <Button>Button 1</Button>

@@ -1,47 +1,94 @@
-// @flow
-import { applyMiddleware, compose, createStore } from 'redux'
+import { applyMiddleware, compose, createStore, StoreCreator } from 'redux'
 import { persistReducer } from 'redux-persist'
 import { routerMiddleware } from 'connected-react-router'
-// import { createLogger } from 'redux-logger'
-import Immutable from 'immutable'
 import axiosMiddleware, {
-  type Options as RequestHandlerOptions
+  ImportedRequestHandlers,
+  ImportedRequestHandlersOptions
 } from './middleware/axios'
-import history from './history'
-import reducers from '../reducers/reducers'
+import index, {
+  ImportedReducers,
+  ImportedReducersConfiguration
+} from './middleware/reducers'
+import storage from 'redux-persist/es/storage'
 
-type Options = {
-  addLogger?: boolean
+export interface Config {
+  /**
+   * Key refers to the local storage key
+   */
+  key: string
+  /**
+   * Choose which reducers to persist on local storage. Typically, you must persist the `currentUser` reducer.
+   */
+  whitelist: Array<string>
+  /**
+   * import immutableTransform from 'redux-persist-transform-immutable'
+   * and pass it into configuration
+   */
+  immutableTransform: Function
 }
 
-const mainStore = (
+export interface MainStoreParams {
+  middleware: Array<any>
+  config: Config
+  requestHandlerConfigurations: {
+    requestHandler: ImportedRequestHandlers
+    requestHandlerOptions: ImportedRequestHandlersOptions
+  }
+  reducerConfigurations: {
+    importedReducers: ImportedReducers
+    options: ImportedReducersConfiguration
+  }
+}
+
+// if (process.env.NODE_ENV === `development`) {
+//   const logger = createLogger({
+//     stateTransformer: (state) =>
+//       Object.keys(state).reduce((p, n) => {
+//         return {
+//           ...p,
+//           n: Immutable.isImmutable(state[n]) ? state[n].toJS() : state[n]
+//         }
+//       }, {})
+//   })
+//   middleWare.push(logger)
+// }
+const mainStore = ({
   config,
-  requestHandler,
-  requestHandlerOptions: RequestHandlerOptions,
-  importedReducers,
-  options: Options
-) => {
-  const { addLogger = false } = options
-  const middleWare = []
-  middleWare.push(axiosMiddleware(requestHandler, requestHandlerOptions))
-  middleWare.push(routerMiddleware(history))
-  // if (addLogger) {
-  //   const logger = createLogger({
-  //     stateTransformer: (state) => {
-  //       return Object.keys(state).reduce((p, n) => {
-  //         return {
-  //           ...p,
-  //           [n]: Immutable.isImmutable(state[n]) ? state[n].toJS() : state[n]
-  //         }
-  //       }, {})
-  //     }
-  //   })
-  //   middleWare.push(logger)
-  // }
+  middleware = [],
+  requestHandlerConfigurations,
+  reducerConfigurations
+}: MainStoreParams): ReturnType<StoreCreator> => {
+  middleware.push(
+    axiosMiddleware(
+      requestHandlerConfigurations.requestHandler,
+      requestHandlerConfigurations.requestHandlerOptions
+    )
+  )
+  middleware.push(routerMiddleware(reducerConfigurations.options.history))
   return createStore(
-    persistReducer(config, reducers(importedReducers)),
-    compose(applyMiddleware(...middleWare))
+    persistReducer(
+      {
+        key: config.key,
+        transforms: [
+          config.immutableTransform({
+            whitelist: config.whitelist
+          })
+        ],
+        whitelist: config.whitelist,
+        storage
+      },
+      index(
+        reducerConfigurations.importedReducers,
+        reducerConfigurations.options
+      )
+    ),
+    compose(applyMiddleware(...middleware))
   )
 }
 
 export default mainStore
+
+export type RootState = {
+  [stateName: string]: any
+}
+export type AppDispatch = Function

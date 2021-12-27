@@ -1,6 +1,6 @@
 {
-  "name": "ergolib",
-  "version": "1.0.0",
+  "name": "ergolib-ts",
+  "version": "1.0.2",
   "description": "Made with create-react-library",
   "author": "",
   "license": "MIT",
@@ -38,6 +38,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "@types/jest": "^25.1.4",
+    "@types/lodash": "^4.14.178",
     "@types/node": "^12.12.38",
     "@types/react": "^16.9.27",
     "@types/react-dom": "^16.9.7",
@@ -74,8 +75,17 @@
     "typescript": "^4.5.4"
   },
   "dependencies": {
+    "axios": "^0.24.0",
     "classnames": "^2.3.1",
-    "query-string": "^7.0.1"
+    "connected-react-router": "^6.9.2",
+    "immutable": "^4.0.0",
+    "lodash": "^4.17.21",
+    "query-string": "^7.0.1",
+    "react-redux": "^7.2.4",
+    "react-router": "^5.2.1",
+    "react-router-dom": "^5.3.0",
+    "redux": "^4.1.2",
+    "redux-persist": "^6.0.0"
   },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",

@@ -6,13 +6,11 @@ import {
   PRIMARY_STORY,
   Title
 } from '@storybook/addon-docs'
-
-// noinspection JSUnusedLocalSymbols
 /**
  * A route creator defines an internal application route.
  * @see https://reactrouter.com/
  */
-export const RouteCreator = (props: RouteInterface) => <div />
+export const RouteCreator = (_props: RouteInterface) => <div />
 
 export default {
   title: 'Helpers/RouteCreator',

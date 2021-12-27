@@ -6,7 +6,7 @@
     "moduleResolution": "node",
     "jsx": "react",
     "sourceMap": true,
-    "declaration": true,
+//    "declaration": true,
     "esModuleInterop": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -18,7 +18,7 @@
     "allowSyntheticDefaultImports": true,
 
     // Added
-    "declarationDir": "types",
+//    "declarationDir": "types",
     "emitDeclarationOnly": true
   },
   "include": ["src"],

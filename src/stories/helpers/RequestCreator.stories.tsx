@@ -7,12 +7,11 @@ import {
   Title
 } from '@storybook/addon-docs'
 
-// noinspection JSUnusedLocalSymbols
 /**
  * Defines an API request or a side effect that should be triggered every
  * time an event is dispatched.
  */
-export const RequestCreator = (props: RequestInterface) => <div />
+export const RequestCreator = (_props: RequestInterface) => <div />
 
 export default {
   title: 'Helpers/RequestCreator',
