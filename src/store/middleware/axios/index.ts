@@ -77,7 +77,9 @@ const axiosMiddleware =
       axios.defaults.headers.common['Content-Type'] = 'application/json'
       if (useTokenCredentials) {
         const accessToken = state.currentUser.get('token')
-        axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`
+        if (accessToken) {
+          axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`
+        }
       }
       const request = overrideTask
         ? overrideTask(data)

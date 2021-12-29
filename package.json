@@ -1,6 +1,6 @@
 {
   "name": "ergolib-ts",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Made with create-react-library",
   "author": "",
   "license": "MIT",
@@ -82,8 +82,6 @@
     "lodash": "^4.17.21",
     "query-string": "^7.0.1",
     "react-redux": "^7.2.4",
-    "react-router": "^5.2.1",
-    "react-router-dom": "^5.3.0",
     "redux": "^4.1.2",
     "redux-persist": "^6.0.0"
   },
